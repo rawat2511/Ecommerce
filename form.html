@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        #form {
+            width: 200px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+        input {
+            margin-bottom: 20px;
+        }
+        label {
+            margin-bottom: 10px;
+        }
+        input[type="submit"]   {
+            text-align: center;
+            margin: auto 50px;
+            background-color: rgb(223, 89, 89);
+            color: wheat;
+            padding: 4px 10px;
+            border: 2px solid red;
+            font-size: 18px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        <label for="name">Product Name: </label>
+        <input type="text" name="name" id="name">
+        <br>
+        <label for="price">Price: </label>
+        <input type="number" name="price" id="price">
+        <br>
+        <label for="image">Image URL: </label>
+        <input type="url" name="image" id="image">
+        <br>
+        <br>
+        <input type="submit" value="SUBMIT">
+    </form>
+
+    <script>
+        var from1 = document.getElementById("form");
+        var name1 = document.getElementById("name");
+        var price1 = document.getElementById("price");
+        var image1 = document.getElementById("image");
+
+        
+        var arr = [];
+        form.addEventListener("submit", function(e) {
+                e.preventDefault();
+                var n = name1.value;
+                var p = price1.value;
+                var i = image1.value;
+                var obj = {
+                    name: n,
+                    price: p,
+                    image: i
+                };
+                arr.push( obj );
+                console.log(obj);
+                console.log(arr);
+                localStorage.setItem( "products", JSON.stringify(arr) );
+        });
+
+    </script>
+</body>
+</html>

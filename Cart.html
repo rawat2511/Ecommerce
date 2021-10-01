@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .card {
+            height: 500px;
+            flex-wrap: wrap;
+            border: 2px solid black;
+            flex: 21%;
+            margin: 1.5%;
+            border-radius: 10px;
+            background-color: rgb(225, 228, 180);
+        }
+        li, input {
+            list-style-type: none;
+            float: right;
+            padding: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 4px;
+            border: 1px solid black;
+            border-radius: 4px;
+        }
+        .clear {
+            clear: both;
+        }
+        img {
+            height: 300px;
+            width: 80%;
+            margin: 0px 10%;
+            border: 1px solid black;
+            border-radius: 6px;
+        }
+        p {
+            background-color: lightcoral;
+            font-size: 24px;
+            margin: 10px 10%;
+            padding: 2px 4px;
+        }
+        button {
+            padding: 4px 12px;
+            background-color: #ffa41c;
+            margin-bottom: 10px;
+            margin-left: 10%;
+            width: 80%;
+            padding: 8px;
+            font-size: 18px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        h1 {
+            text-align: center;
+            width: 80%;
+            margin: 20px auto;
+            border: 2px solid blue;
+            background-color: rgb(135, 135, 228);
+            border-radius: 4px;
+        }
+        form {
+            float: left;
+        }
+        #checkout {
+            width: 120px;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <input type="submit" value="Apply" id="applyCode">
+        <input type="text" name="code" id="code" placeholder="promo code">
+    </form>
+    <ul>
+        <li id="totalPrice">Rs.0.00</li>
+        <li id="totalItems">0</li>
+    </ul>
+    <div class="clear"></div>
+    <button id="checkout" >checkout</button>
+    <div class="clear"></div>
+    <div class="products"></div>
+    <script>
+
+        var checkout = document.getElementById("checkout");
+        checkout.addEventListener("click", () => {
+            window.location.href = "success.html";
+        });
+        var tPrice = 0.00;
+        var applyCode = document.getElementById("applyCode");
+        var promoCode = document.getElementById("code");
+        var divCart = document.getElementsByClassName("products")[0];
+        var totalPrice = document.getElementById("totalPrice");
+
+        applyCode.addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log(tPrice);
+            if( promoCode.value === "masai30"){
+                var price = Math.round(tPrice*0.7);
+                totalPrice.innerText = "Total Cost: Rs." + price + ".00";
+                alert("Apply Promo Code 'masai30'");
+            }
+            else{
+                alert("No such Promo Code Exist");
+            }
+            console.log( promoCode.value === "masai30" );
+            console.log(tPrice);
+        });
+
+    window.addEventListener('load', (event) => {
+        var totalItems = document.getElementById("totalItems");
+        var productsInCart = localStorage.getItem("productsInCart");
+        productsInCart = JSON.parse(productsInCart);
+
+            
+            var tItems = productsInCart.length;
+
+        for( var i = 0; i < productsInCart.length; i++ ){
+            var div = document.createElement("div");
+            div.classList.add("inCart");
+            div.classList.add("card");
+            var n = document.createElement("h1");
+            n.innerText = productsInCart[i].name;
+            var img = document.createElement("img");
+            img.src = productsInCart[i].image;
+            var p = document.createElement("p");
+            p.innerText = "Rs." + productsInCart[i].price;
+            tPrice += Number(productsInCart[i].price);
+
+            div.appendChild(n);
+            div.appendChild(img);
+            div.appendChild(p);
+            divCart.appendChild(div);
+        }
+        
+        totalPrice.innerText = "Total Cost: Rs." + tPrice + ".00";
+        totalItems.innerText = "Total Items: " + tItems;
+      });
+
+    </script>
+</body>
+</html>
